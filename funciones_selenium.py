@@ -55,7 +55,7 @@ def con_saldo ():
     btn_go = driver.find_element(By.ID, "btnGetAccount")
     btn_go.click()
     time.sleep(1)
-    driver.save_screenshot("consulta_saldo.jpg")
+    driver.save_screenshot("consulta_saldo.png")
     btn_my_acc = driver.find_element(By.ID, "AccountLink")
     btn_my_acc.click()
     time.sleep(1)
@@ -88,13 +88,18 @@ def extraer_Tabla_a_Excel():
     # Buscar la tabla y sus filas
     filas = driver.find_elements(By.XPATH, "//table[contains(., 'Transaction ID')]//tr")
 
-    for fila in filas:
-        # Obtener el texto de los encabezados (th) o celdas (td)
-        celdas = fila.find_elements(By.XPATH, "./th | ./td")
-        datos_fila = [celda.text.strip() for celda in celdas]
-        
-        if datos_fila:  # Si la fila tiene contenido, agregar al Excel
-            ws.append(datos_fila)
+    if filas:
+        print("Se encontraron transacciones.")
+
+        for fila in filas:
+            # Obtener el texto de los encabezados (th) o celdas (td)
+            celdas = fila.find_elements(By.XPATH, "./th | ./td")
+            datos_fila = [celda.text.strip() for celda in celdas]
+            
+            if datos_fila:
+                ws.append(datos_fila)
+    else:
+        print("No se encontraron transacciones.")
 
     # Guardar el archivo
     wb.save("Transacciones_Extraidas.xlsx")
