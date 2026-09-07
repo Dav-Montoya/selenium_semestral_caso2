@@ -55,9 +55,11 @@ def con_saldo ():
     btn_go = driver.find_element(By.ID, "btnGetAccount")
     btn_go.click()
     time.sleep(1)
+    driver.save_screenshot("consulta_saldo.jpg")
     btn_my_acc = driver.find_element(By.ID, "AccountLink")
     btn_my_acc.click()
     time.sleep(1)
+
 
 
 def con_tran ():
