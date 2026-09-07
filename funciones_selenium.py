@@ -57,8 +57,24 @@ def con_saldo ():
     btn_go = driver.find_element(By.ID, "btnGetAccount")
     btn_go.click()
     time.sleep(10)
+    btn_my_acc = driver.find_element(By.ID, "AccountLink")
+    btn_my_acc.click()
+    time.sleep(10)
 
 
-def con_mov ():
+def con_tran ():
     btn_acc_mvm = driver.find_element(By.ID, "MenuHyperLink2")
     btn_acc_mvm.click()
+    time.sleep(10)
+    btn_v_tran = driver.find_element(By.ID, "MenuHyperLink3")
+    btn_v_tran.click()
+    time.sleep(2)
+
+    #Fechas
+    fecha_ini = driver.find_element(By.XPATH, '//*[@id="startDate"]')
+    #Problema con la pagina, no tiene fechas anteriores a la fecha actual
+    fecha_ini.send_keys("2026-09-07")#Año / mes / Dia
+    time.sleep(5)
+    btn_submit = driver.find_element(By.LINK_TEXT, "Submit")
+    btn_submit.click()
+    time.sleep(10)

@@ -7,5 +7,6 @@ try:
     ir_al_link(pagina)
     ini_sesion()
     con_saldo()
+    con_tran()
 except Exception as e:
     print(f"error :{e}")
