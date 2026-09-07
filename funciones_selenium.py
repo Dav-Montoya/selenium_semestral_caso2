@@ -45,7 +45,7 @@ def ini_sesion ():
 
 def con_saldo ():
     btn_acc_smry = driver.find_element(By.ID, "MenuHyperLink1")
-    btn_go = driver.find_element(By.ID, "btnGetAccount")
+    
 
     btn_acc_smry.click()
     time.sleep(3)
@@ -54,6 +54,7 @@ def con_saldo ():
     select = Select(combo_box)
     select.select_by_visible_text("800002 Savings")
     time.sleep(10)
+    btn_go = driver.find_element(By.ID, "btnGetAccount")
     btn_go.click()
     time.sleep(10)
 
