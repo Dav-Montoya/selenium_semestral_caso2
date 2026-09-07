@@ -11,8 +11,6 @@ import time
 #driver_edge = webdriver.Edge()
 #driver_safari = webdriver.Safari()
 driver = webdriver.Chrome()
-def abrir_chrome():
-    driver = webdriver.Chrome()
 
 def ir_al_link (link):
     driver.get(link)
@@ -53,28 +51,48 @@ def con_saldo ():
     combo_box.click()
     select = Select(combo_box)
     select.select_by_visible_text("800002 Savings")
-    time.sleep(10)
+    time.sleep(1)
     btn_go = driver.find_element(By.ID, "btnGetAccount")
     btn_go.click()
-    time.sleep(10)
+    time.sleep(1)
     btn_my_acc = driver.find_element(By.ID, "AccountLink")
     btn_my_acc.click()
-    time.sleep(10)
+    time.sleep(1)
 
 
 def con_tran ():
     btn_acc_mvm = driver.find_element(By.ID, "MenuHyperLink2")
     btn_acc_mvm.click()
-    time.sleep(10)
-    btn_v_tran = driver.find_element(By.ID, "MenuHyperLink3")
-    btn_v_tran.click()
-    time.sleep(2)
+    time.sleep(5)
+    #btn_v_tran = driver.find_element(By.ID, "MenuHyperLink3")
+    #btn_v_tran.click()
+    #time.sleep(2)
 
     #Fechas
-    fecha_ini = driver.find_element(By.XPATH, '//*[@id="startDate"]')
+    fecha_ini = driver.find_element(By.NAME, "startDate")
     #Problema con la pagina, no tiene fechas anteriores a la fecha actual
     fecha_ini.send_keys("2026-09-07")#Año / mes / Dia
     time.sleep(5)
-    btn_submit = driver.find_element(By.LINK_TEXT, "Submit")
+    btn_submit = driver.find_element(By.XPATH, "//input[@type='submit' and @value='Submit']")
     btn_submit.click()
-    time.sleep(10)
+    time.sleep(5)
+
+def extraer_Tabla_a_Excel():
+    # Crear un libro de Excel
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "Transacciones"
+
+    # Buscar la tabla y sus filas
+    filas = driver.find_elements(By.XPATH, "//table[contains(., 'Transaction ID')]//tr")
+
+    for fila in filas:
+        # Obtener el texto de los encabezados (th) o celdas (td)
+        celdas = fila.find_elements(By.XPATH, "./th | ./td")
+        datos_fila = [celda.text.strip() for celda in celdas]
+        
+        if datos_fila:  # Si la fila tiene contenido, agregar al Excel
+            ws.append(datos_fila)
+
+    # Guardar el archivo
+    wb.save("Transacciones_Extraidas.xlsx")
