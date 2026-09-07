@@ -1,8 +1,11 @@
 from funciones_selenium import *
 
-pagina = "https://demo.testfire.net/"
+pagina = "https://demo.testfire.net/index.jsp"
 
 try:
-    abrir_chrome(pagina)
+    abrir_chrome()
+    ir_al_link(pagina)
+    ini_sesion()
+    con_saldo()
 except Exception as e:
     print(f"error :{e}")
